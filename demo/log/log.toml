@@ -1,0 +1,9 @@
+[default]
+Filename      = "./demo/log/log.log"
+MaxSize       = 30
+MaxBackups    = 6
+MaxAge        = 30
+Compress      = false
+Level         = "debug"
+SplitByLevel  = false
+
