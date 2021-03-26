@@ -2,85 +2,27 @@ package main
 
 import (
 	"fmt"
-	"jpkt/src/core"
-	"sync"
-	"sync/atomic"
+	"github.com/kisunSea/jpkt/src/core"
 	"time"
 )
 
-func TestNewPool() {
-	pool := core.NewPool(1000, 10000)
-	defer pool.Release()
+func tHandler(v ...interface{}) error {
+	time.Sleep(1 * time.Second)
+	//panic("1111")
+	fmt.Println(core.Gid(), v)
+	return nil
+}
 
-	iterations := 1000000
-	var counter uint64
+func TestPool() {
+	pool, _ := core.NewJPool(10)
 
-	wg := sync.WaitGroup{}
-	wg.Add(iterations)
-	for i := 0; i < iterations; i++ {
-		arg := uint64(1)
-		job := func() {
-			defer wg.Done()
-			atomic.AddUint64(&counter, arg)
-		}
-
-		pool.JobQueue <- job
+	for i := 0; i < 20; i++ {
+		t := core.NewJTask(tHandler, []interface{}{i, "test"})
+		_ = pool.Put(t)
 	}
-	wg.Wait()
 
-	counterFinal := atomic.LoadUint64(&counter)
-	if uint64(iterations) != counterFinal {
-		fmt.Println(fmt.Errorf("iterations %v is not equal counterFinal %v", iterations, counterFinal))
-	}
+	pool.Start()
+	pool.Close()
 }
 
-const (
-	runTimes  = 10000
-	poolSize  = 500
-	queueSize = 50
-	N         = 1
-)
 
-func demoTask(i, j int) {
-	time.Sleep(time.Millisecond * 10)
-	fmt.Println(fmt.Sprintf("%d-%d", i, j))
-}
-
-func TGoroutine() {
-	var wg sync.WaitGroup
-	for i := 0; i < N; i++ {
-		wg.Add(runTimes)
-
-		for j := 0; j < runTimes; j++ {
-			go func() {
-				defer wg.Done()
-				demoTask(i, j)
-			}()
-		}
-
-		wg.Wait()
-	}
-}
-
-func TGpool() {
-	pool := core.NewPool(poolSize, queueSize)
-	defer pool.Release()
-	var wg sync.WaitGroup
-
-	for i := 0; i < N; i++ {
-		wg.Add(runTimes)
-		for j := 0; j < runTimes; j++ {
-			pool.JobQueue <- func() {
-				defer wg.Done()
-				demoTask(i, j)
-			}
-		}
-		wg.Wait()
-	}
-}
-
-func main() {
-	TestNewPool()
-	_ = TGoroutine
-	TGpool()
-}

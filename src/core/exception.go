@@ -2,11 +2,13 @@ package core
 
 import (
 	"fmt"
-	"go.uber.org/zap"
-	"jpkt/src/datahandle"
-	"jpkt/src/meta"
 	"runtime"
 	"time"
+
+	"go.uber.org/zap"
+
+	"github.com/kisunSea/jpkt/src/datahandle"
+	"github.com/kisunSea/jpkt/src/meta"
 )
 
 // 用于及“标准错误类型”下的“调用栈”
@@ -124,6 +126,27 @@ func StandardizeErr(err error) (jse *JpktStandardError) {
 	)
 }
 
+// @title : ConvertPanic2StandardErr 将已捕获的panic异常装换为标准错误
+func ConvertPanic2StandardErr(r interface{}) *JpktStandardError {
+	var jse_ *JpktStandardError
+
+	switch r.(type) {
+	case *JpktStandardError:
+		jse_ = r.(*JpktStandardError)
+	case JpktStandardError:
+		jseTmp := r.(JpktStandardError)
+		jse_ = &jseTmp
+	// TODO 更多错误类型 gRPC相关、第三方组件错误类型
+	default:
+		jse_ = RaiseStandardError(
+			meta.JErrInternal,
+			"PanicError",
+			"内部异常， 错误代码："+datahandle.FmtErrCode2String(meta.JErrInternal),
+			fmt.Sprintf("%v\r\n", r), )
+	}
+	return jse_
+}
+
 // @title :  CatchPanicErr 捕获panic异常并将其转化为标准错误
 // @remark:  该方法使用在`defer`中
 // @exp   :  defer CatchPanicErr(logger)
@@ -136,23 +159,7 @@ func CatchPanicErr(logger *zap.Logger) *JpktStandardError {
 		return nil
 	}
 
-	var jse_ *JpktStandardError
-
-	switch err.(type) {
-	case *JpktStandardError:
-		jse_ = err.(*JpktStandardError)
-	case JpktStandardError:
-		jseTmp := err.(JpktStandardError)
-		jse_ = &jseTmp
-	// TODO 更多错误类型 gRPC相关、第三方组件错误类型
-	default:
-		jse_ = RaiseStandardError(
-			meta.JErrInternal,
-			"PanicError",
-			"内部异常， 错误代码："+datahandle.FmtErrCode2String(meta.JErrInternal),
-			fmt.Sprintf("%v\r\n", err), )
-	}
-
+	jse_ := ConvertPanic2StandardErr(err)
 	if logger != nil {
 		logger.Warn(jse_.ErrorDetail())
 	}

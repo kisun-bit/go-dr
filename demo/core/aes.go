@@ -1,11 +1,11 @@
 package main
 
 import (
-	"jpkt/src/core"
+	"github.com/kisunSea/jpkt/src/core"
 	"fmt"
 )
 
-func main() {
+func testAes(){
 	key := []byte("1234567890123456")
 	initVal := []byte("##########!!!!!!!!!!")
 	fmt.Println("before   : ", string(initVal))
@@ -15,3 +15,7 @@ func main() {
 	origin, _ := core.AESDecryptHexStringToOrigin(ret, key)
 	fmt.Println("decrypted: ", origin)
 }
+
+//func main() {
+//	testAes()
+//}

@@ -3,12 +3,14 @@ package main
 import (
 	"errors"
 	"fmt"
-	"go.uber.org/zap"
-	"jpkt/src/core"
-	"jpkt/src/datahandle"
-	"jpkt/src/log"
-	"jpkt/src/meta"
 	"time"
+
+	"go.uber.org/zap"
+
+	"github.com/kisunSea/jpkt/src/core"
+	"github.com/kisunSea/jpkt/src/datahandle"
+	"github.com/kisunSea/jpkt/src/log"
+	"github.com/kisunSea/jpkt/src/meta"
 )
 
 var Lg *zap.Logger
@@ -73,7 +75,7 @@ func testLog() {
 	Aaa()
 }
 
-func main() {
+func testLogDemo() {
 	testLog()
 	go test1()
 	test4()

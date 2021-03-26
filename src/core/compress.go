@@ -2,8 +2,9 @@ package core
 
 import (
 	"bytes"
-	"github.com/pierrec/lz4"
 	"io"
+
+	"github.com/pierrec/lz4"
 )
 
 // ############ 基于lz4实现压缩与解压缩

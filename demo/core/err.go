@@ -3,9 +3,9 @@ package main
 import (
 	"errors"
 	"fmt"
-	"jpkt/src/core"
-	"jpkt/src/datahandle"
-	"jpkt/src/meta"
+	"github.com/kisunSea/jpkt/src/core"
+	"github.com/kisunSea/jpkt/src/datahandle"
+	"github.com/kisunSea/jpkt/src/meta"
 )
 
 func test1() {
@@ -54,9 +54,9 @@ func test6() {
 	core.StandardPanic(meta.JErrNoFreePort, "Test", "test...test...test", "debug")
 }
 
-func main() {
-	defer core.CatchPanicErr(nil)
-	test1()
-	test5()
-	test6()
-}
+//func main() {
+//	defer core.CatchPanicErr(nil)
+//	test1()
+//	test5()
+//	test6()
+//}

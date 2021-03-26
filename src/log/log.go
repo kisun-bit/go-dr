@@ -1,13 +1,15 @@
 package log
 
 import (
+	"strconv"
+	"time"
+
 	"github.com/natefinch/lumberjack"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"jpkt/src/core"
-	"strconv"
-	"time"
+
+	"github.com/kisunSea/jpkt/src/core"
 )
 
 type LgConf struct {
