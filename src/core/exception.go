@@ -150,7 +150,7 @@ func ConvertPanic2StandardErr(r interface{}) *JpktStandardError {
 // @title :  CatchPanicErr 捕获panic异常并将其转化为标准错误
 // @remark:  该方法使用在`defer`中
 // @exp   :  defer CatchPanicErr(logger)
-func CatchPanicErr(logger *zap.Logger) *JpktStandardError {
+func CatchPanicErr(logger *zap.SugaredLogger) *JpktStandardError {
 	err := recover()
 	if err == nil {
 		if logger != nil {

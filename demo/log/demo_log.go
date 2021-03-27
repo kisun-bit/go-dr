@@ -13,7 +13,7 @@ import (
 	"github.com/kisunSea/jpkt/src/meta"
 )
 
-var Lg *zap.Logger
+var Lg *zap.SugaredLogger
 
 //var Lg2 *zap.Logger
 
@@ -83,3 +83,7 @@ func testLogDemo() {
 	test6()
 	time.Sleep(5 * 1000)
 }
+
+//func main() {
+//	testLogDemo()
+//}

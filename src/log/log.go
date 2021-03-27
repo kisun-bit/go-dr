@@ -24,10 +24,10 @@ type LgConf struct {
 
 type JLogger struct {
 	logConf LgConf
-	logger  *zap.Logger
+	logger  *zap.SugaredLogger
 }
 
-func GetJLoggerByConf(baseDir, confFileName, LoggerName string) *zap.Logger {
+func GetJLoggerByConf(baseDir, confFileName, LoggerName string) *zap.SugaredLogger {
 	jl := &JLogger{
 		logConf: readLogConf(baseDir, confFileName, LoggerName),
 		logger:  nil,
@@ -41,7 +41,7 @@ func (jl *JLogger) setConf() {
 	encoder := jl.getEncoder()
 	_core := zapcore.NewCore(encoder, writeSyncer, zapcore.DebugLevel)
 
-	jl.logger = zap.New(_core, zap.AddCaller())
+	jl.logger = zap.New(_core, zap.AddCaller()).Sugar()
 }
 
 func readLogConf(baseDir, confFileName, LoggerName string) LgConf {
