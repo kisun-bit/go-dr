@@ -148,7 +148,7 @@ func (jp *JPool) Close() {
 		return
 	}
 
-	for len(jp.jTasks) > 10 {
+	for len(jp.jTasks) > 0 {
 		time.Sleep(time.Millisecond * 100)
 	}
 
