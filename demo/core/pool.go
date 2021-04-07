@@ -9,7 +9,7 @@ import (
 func tHandler(v ...interface{}) error {
 	time.Sleep(1 * time.Second)
 	//panic("1111")
-	fmt.Println(core.Gid(), v)
+	fmt.Println(core.Gid(), v[0], v[1])
 	return nil
 }
 

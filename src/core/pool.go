@@ -32,7 +32,7 @@ type JTask struct {
 }
 
 func (jt *JTask) Run() {
-	_ = jt.Handler(jt.Params)
+	_ = jt.Handler(jt.Params...)
 }
 
 func NewJTask(taskHandler func(v ...interface{}) error, handlerParams []interface{}) *JTask {
