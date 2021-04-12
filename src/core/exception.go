@@ -166,7 +166,10 @@ func CatchPanicErr(logger *zap.SugaredLogger) *JpktStandardError {
 	return jse_
 }
 
-func StandardPanic(code uint32, errType, reason, debug string) {
+func StandardPanic(code uint32, errType, reason, debug string, logger *zap.SugaredLogger) {
 	jse := RaiseStandardError(code, errType, reason, debug)
+	if logger != nil {
+		logger.Error(jse.ErrorDetail())
+	}
 	panic(jse)
 }
