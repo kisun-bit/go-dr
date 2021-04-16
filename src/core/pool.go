@@ -1,15 +1,15 @@
-/*@Title 任务池实现
-  @Remark
-      要实现该功能需要解决下述的问题：
-      1. goroutine如何重用？  回答 -> 池化，创建一个goroutine池
-      2. 限制goroutine个数？  回答 -> 同上.
-      3. 任务执行流程？       回答 -> "生产者 --(生产任务)--> 队列 --(消费任务)--> 消费者"
-      4. 单个goroutine执行失败会导致整个进程崩溃？ 回答 -> 为每一个错误预留一个“恢复处理”的接口
-      实现：
-      “Talk is cheap. Show me the code.”
-  @Description
-      pass
-*/
+// Package core
+// @Title 任务池实现
+// @Remark
+//      要实现该功能需要解决下述的问题：
+//      1. goroutine如何重用？  回答 -> 池化，创建一个goroutine池
+//      2. 限制goroutine个数？  回答 -> 同上.
+//      3. 任务执行流程？       回答 -> "生产者 --(生产任务)--> 队列 --(消费任务)--> 消费者"
+//      4. 单个goroutine执行失败会导致整个进程崩溃？ 回答 -> 为每一个错误预留一个“恢复处理”的接口
+//      实现：
+//      “Talk is cheap. Show me the code.”
+// @Description
+//      pass
 package core
 
 import (
@@ -25,7 +25,7 @@ var (
 	ErrPoolAlreadyClosed = errors.New("jpkt-pool-error: ErrPoolAlreadyClosed")
 )
 
-// 定义"任务"
+// JTask 定义"任务"
 type JTask struct {
 	Handler func(v ...interface{}) error // 需要执行的函数
 	Params  []interface{}                // 函数参数集合
@@ -42,7 +42,7 @@ func NewJTask(taskHandler func(v ...interface{}) error, handlerParams []interfac
 	}
 }
 
-// 定义"任务池"
+// JPool 定义"任务池"
 type JPool struct {
 	capacity       uint64                 // 容量
 	runningWorkers uint64                 // 正在执行的“goroutine”个数

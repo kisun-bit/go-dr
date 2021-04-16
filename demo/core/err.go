@@ -51,7 +51,7 @@ func test5() {
 }
 
 func test6() {
-	core.StandardPanic(meta.JErrNoFreePort, "Test", "test...test...test", "debug")
+	core.StandardPanic(meta.JErrNoFreePort, "Test", "test...test...test", "debug", nil)
 }
 
 //func main() {

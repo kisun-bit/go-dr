@@ -3,6 +3,8 @@ module github.com/kisunSea/jpkt
 go 1.14
 
 require (
+	github.com/OneOfOne/xxhash v1.2.2
+	github.com/cespare/xxhash v1.1.0
 	github.com/frankban/quicktest v1.11.3 // indirect
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/pierrec/lz4 v2.6.0+incompatible
