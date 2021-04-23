@@ -27,6 +27,15 @@ type JLogger struct {
 	logger  *zap.SugaredLogger
 }
 
+func GetJLoggerByMapConf(logConf map[string]interface{}) *zap.SugaredLogger {
+	jl := &JLogger{
+		logConf: parseLogConf(logConf),
+		logger:  nil,
+	}
+	jl.setConf()
+	return jl.logger
+}
+
 func GetJLoggerByConf(baseDir, confFileName, LoggerName string) *zap.SugaredLogger {
 	jl := &JLogger{
 		logConf: readLogConf(baseDir, confFileName, LoggerName),
@@ -44,6 +53,19 @@ func (jl *JLogger) setConf() {
 	jl.logger = zap.New(_core, zap.AddCaller()).Sugar()
 }
 
+func parseLogConf(lc map[string]interface{}) LgConf {
+	return LgConf{
+		filename:     lc["Filename"].(string),
+		maxSize:      lc["MaxSize"].(int),
+		maxBackups:   lc["MaxBackups"].(int),
+		maxAge:       lc["MaxAge"].(int),
+		compress:     lc["Compress"].(bool),
+		level:        lc["Level"].(string),
+		splitByLevel: lc["SplitByLevel"].(bool),
+	}
+}
+
+/**/
 func readLogConf(baseDir, confFileName, LoggerName string) LgConf {
 	v := viper.New()
 	v.SetConfigName(confFileName)

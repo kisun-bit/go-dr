@@ -9,21 +9,31 @@ import (
 
 	"github.com/kisunSea/jpkt/src/core"
 	"github.com/kisunSea/jpkt/src/datahandle"
-	"github.com/kisunSea/jpkt/src/log"
 	"github.com/kisunSea/jpkt/src/meta"
 )
 
 var Lg *zap.SugaredLogger
 
-//var Lg2 *zap.Logger
+var Lg2 *zap.SugaredLogger
 
-func init() {
-	Lg = log.GetJLoggerByConf(`D:\workspace\jrsa\Jpkt\demo\log`, "log", "default")
-	defer Lg.Sync()
-
-	//Lg2 = log.GetJLoggerByConf(`D:\workspace\jrsa\Jpkt\demo\log`, "log", "default")
-	//defer Lg.Sync()
-}
+//func init() {
+//	Lg = log.GetJLoggerByConf(`D:\workspace\Jpkt\demo\log`, "log", "default")
+//	defer Lg.Sync()
+//
+//	Lg2 = log.GetJLoggerByMapConf(
+//		map[string]interface{}{
+//			"Logger":       "default",
+//			"Filename":     "./demo/log/jpkt.log",
+//			"MaxSize":      30,
+//			"MaxBackups":   3,
+//			"MaxAge":       30,
+//			"Compress":     false,
+//			"Level":        "debug",
+//			"SplitByLevel": false,
+//		},
+//	)
+//	defer Lg2.Sync()
+//}
 
 func test1() {
 	test2()
@@ -68,7 +78,7 @@ func test5() {
 }
 
 func test6() {
-	core.StandardPanic(meta.JErrNoFreePort, "Test", "test...test...test", "debug")
+	core.StandardPanic(meta.JErrNoFreePort, "Test", "test...test...test", "debug", nil)
 }
 
 func testLog() {
@@ -85,5 +95,5 @@ func testLogDemo() {
 }
 
 //func main() {
-//	testLogDemo()
+//	Lg2.Info("hhhhhhhhhhhhhhhhh")
 //}
