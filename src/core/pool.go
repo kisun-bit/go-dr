@@ -14,15 +14,15 @@ package core
 
 import (
 	"errors"
-	"fmt"
+	"github.com/kisunSea/go_dr/src/log"
 	"sync"
 	"sync/atomic"
 	"time"
 )
 
 var (
-	ErrInvalidJPoolCap   = errors.New("jpkt-pool-error: ErrInvalidJPoolCap")
-	ErrPoolAlreadyClosed = errors.New("jpkt-pool-error: ErrPoolAlreadyClosed")
+	ErrInvalidJPoolCap   = errors.New("pool-error: ErrInvalidJPoolCap")
+	ErrPoolAlreadyClosed = errors.New("pool-error: ErrPoolAlreadyClosed")
 )
 
 // JTask 定义"任务"
@@ -73,12 +73,11 @@ func (jp *JPool) Start() {
 		defer func() {
 			jp.decrRunningWorkers()
 			if r := recover(); r != nil {
-				jse := ConvertPanic2StandardErr(r)
 				jp.internalWg.Done()
 				if jp.panicHandler != nil {
-					jp.panicHandler(jse) // TODO 后续支持定制错误处理方法 ...
+					jp.panicHandler(r) // TODO 后续支持定制错误处理方法 ...
 				} else {
-					fmt.Println(jse.ErrorDetail())
+					log.DLogger.Fmt.Errorf("panic: %v", r)
 				}
 				jp.checkWorker() // 防止通道里put task后出现异常，任务通道新增的任务没有goroutine来消费
 			}
@@ -152,7 +151,7 @@ func (jp *JPool) Close() {
 		time.Sleep(time.Millisecond * 100)
 	}
 
-	jp.internalWg.Wait() // 保证所有任务均已执行，不关心错误
+	jp.internalWg.Wait()
 
 	// close ch
 	_closeTaskChan := func() {

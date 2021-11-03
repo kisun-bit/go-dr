@@ -1,14 +1,14 @@
 package core
 
 import (
+	"bytes"
+	"encoding/json"
 	"runtime"
 	"strconv"
 	"strings"
 )
 
-// @title :  Gid 获取GoroutineId
-// @remark:  尽量避免使用基于GoroutineId实现“Goroutine Local Storage”
-//	         原因见 https://blog.csdn.net/sb___itfk/article/details/107862104
+// Gid return the goroutine ID
 func Gid() (gid int) {
 	var buf [64]byte
 	n := runtime.Stack(buf[:], false)
@@ -18,4 +18,20 @@ func Gid() (gid int) {
 		gid = -1
 	}
 	return gid
+}
+
+// PrettyPrintStruct prints the visible properties of the structure in JSON format
+func PrettyPrintStruct(v interface{}) string {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return "jsonMarshal err:\t" + err.Error()
+	}
+
+	var out bytes.Buffer
+	err = json.Indent(&out, b, "", "  ")
+	if err != nil {
+		return "jsonIndent err:\t" + err.Error()
+	}
+
+	return out.String()
 }

@@ -1,34 +1,30 @@
 package core
 
 import (
-	"bytes"
+	"fmt"
 	"github.com/pierrec/lz4"
-	"io"
 )
 
-// ############ 基于lz4实现压缩与解压缩
+var ht = make([]int, 1<<16)
 
-func Compress(in []byte) ([]byte, error) {
-	r := bytes.NewReader(in)
-	w := &bytes.Buffer{}
-	zw := lz4.NewWriter(w)
-	_, err := io.Copy(zw, r)
-	if err != nil {
-		return nil, err
+// Lz4Compress Lz4 Compresses data
+func Lz4Compress(data []byte) (_ []byte, err error) {
+
+	target := make([]byte, lz4.CompressBlockBound(len(data)))
+	if size, err := lz4.CompressBlock(data, target, ht); err != nil || size <= 0 {
+		return nil, fmt.Errorf("failed to compress: %v", err)
+	} else {
+		return target[:size], nil
 	}
-	if err := zw.Close(); err != nil {
-		return nil, err
-	}
-	return w.Bytes(), nil
 }
 
-func Decompress(in []byte) ([]byte, error) {
-	r := bytes.NewReader(in)
-	w := &bytes.Buffer{}
-	zr := lz4.NewReader(r)
-	_, err := io.Copy(w, zr)
-	if err != nil {
+// Lz4Decompress Lz4 Decompress data
+func Lz4Decompress(data []byte, len_ int64) (_ []byte, err error) {
+
+	tmp := make([]byte, len_)
+	if n, err := lz4.UncompressBlock(data, tmp); err != nil {
 		return nil, err
+	} else {
+		return tmp[:n], nil
 	}
-	return w.Bytes(), nil
 }

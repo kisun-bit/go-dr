@@ -14,8 +14,6 @@ import (
 	"strings"
 )
 
-// ############## 基于AES（CBC模式）实现加密/解密
-
 var iv = []byte{0x31, 0x37, 0x36, 0x35, 0x34, 0x33, 0x32, 0x31, 0x38, 0x27, 0x36, 0x35, 0x33, 0x23, 0x32, 0x33}
 
 func pKCS7Padding(ciphertext []byte, blockSize int) []byte {
@@ -76,7 +74,7 @@ func AESDecryptHexStringToOrigin(hexStr string, key []byte) (string, error) {
 	return string(origin), nil
 }
 
-// XXHashFile 计算任意大小文件内容(路径为path)的hashcode
+// XXHashFileWithLowCollision 计算任意大小文件内容(路径为path)的hashcode
 //
 // 通过指定minCalcBlk来确定，每一个分块的计算样本长度，例如：大文件被分成1000个分块，仅取每一个分块的前minCalcBl参与哈希计算
 // 文件大小与切分分块数的对应关系如下：
@@ -90,7 +88,7 @@ func AESDecryptHexStringToOrigin(hexStr string, key []byte) (string, error) {
 // 计算每一个分块的前minCalcBlk Byte的hashCode（注意：分块长度不足minCalcBlk，则计算整个分块），
 // 得到XXHash_1, XXHash_2, XXHash_1...XXHash_1000，
 // 拼接得到 `XXHash_1|XXHash_2|XXHash_1|...|XXHash_1000`，并对其做整体哈希计算得到该文件的hashcode.
-func XXHashFile(path string, minCalcBlk uint64) (uint64, error) {
+func XXHashFileWithLowCollision(path string, minCalcBlk uint64) (uint64, error) {
 	fi, err := os.Stat(path)
 	if err != nil {
 		return 0, err
