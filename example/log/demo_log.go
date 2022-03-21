@@ -2,7 +2,7 @@ package main
 
 import (
 	"errors"
-	"github.com/kisunSea/go_dr/src/log"
+	"github.com/kisun-bit/go_dr/src/log"
 	"go.uber.org/zap"
 )
 

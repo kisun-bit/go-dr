@@ -3,7 +3,7 @@ package iscsi
 import (
 	"errors"
 	"fmt"
-	"github.com/kisunSea/go_dr/src/cmd"
+	"github.com/kisun-bit/go_dr/src/cmd"
 	"strings"
 	"time"
 )

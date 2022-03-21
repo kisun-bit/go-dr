@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/kisunSea/go_dr/src/core"
+	"github.com/kisun-bit/go_dr/src/core"
 )
 
 func testAes() {
