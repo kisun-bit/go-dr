@@ -2,12 +2,12 @@ package core
 
 import (
 	"fmt"
-	"github.com/kisunSea/go_dr/src/log"
+	"github.com/kisun-bit/go-dr/src/log"
 	"runtime"
 	"time"
 
-	"github.com/kisunSea/go_dr/src/datahandle"
-	"github.com/kisunSea/go_dr/src/meta"
+	"github.com/kisun-bit/go-dr/src/datahandle"
+	"github.com/kisun-bit/go-dr/src/meta"
 )
 
 // 用于及“标准错误类型”下的“调用栈”

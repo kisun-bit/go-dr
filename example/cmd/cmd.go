@@ -3,7 +3,7 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"github.com/kisunSea/go_dr/src/cmd"
+	"github.com/kisun-bit/go-dr/src/cmd"
 	"github.com/kr/pretty"
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"golang.org/x/text/transform"

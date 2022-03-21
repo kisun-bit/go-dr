@@ -2,7 +2,7 @@ package iscsi
 
 import (
 	"errors"
-	"github.com/kisunSea/go_dr/src/cmd"
+	"github.com/kisun-bit/go-dr/src/cmd"
 	"regexp"
 	"strings"
 )

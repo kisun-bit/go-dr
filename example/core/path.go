@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/kisunSea/go_dr/src/datahandle"
+	"github.com/kisun-bit/go-dr/src/datahandle"
 )
 
 func testPath() {

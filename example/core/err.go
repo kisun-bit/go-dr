@@ -3,9 +3,9 @@ package main
 import (
 	"errors"
 	"fmt"
-	"github.com/kisunSea/go_dr/src/core"
-	"github.com/kisunSea/go_dr/src/datahandle"
-	"github.com/kisunSea/go_dr/src/meta"
+	"github.com/kisun-bit/go-dr/src/core"
+	"github.com/kisun-bit/go-dr/src/datahandle"
+	"github.com/kisun-bit/go-dr/src/meta"
 )
 
 func test1() {
@@ -42,7 +42,7 @@ func test4() {
 }
 
 func test5() {
-	defer core.CatchPanicErr(nil)
+	defer core.CatchPanicErr()
 	panic(core.RaiseStandardError(
 		meta.ErrUnknown,
 		"UnknownError",
@@ -51,7 +51,7 @@ func test5() {
 }
 
 func test6() {
-	core.StandardPanic(meta.ErrNoFreePort, "Test", "test...test...test", "debug", nil)
+	core.StandardPanic(meta.ErrNoFreePort, "Test", "test...test...test", "debug")
 }
 
 //func main() {

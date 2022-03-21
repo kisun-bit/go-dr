@@ -2,7 +2,7 @@ package core
 
 import (
 	"encoding/binary"
-	"github.com/kisunSea/go_dr/src/log"
+	"github.com/kisun-bit/go-dr/src/log"
 	"io"
 	"os"
 	"sync"

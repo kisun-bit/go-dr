@@ -1,5 +1,5 @@
 package iscsi
 
-import "github.com/kisunSea/go_dr/src/log"
+import "github.com/kisun-bit/go-dr/src/log"
 
 var logger = log.DLogger
